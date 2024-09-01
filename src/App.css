@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 .active {
-    background-color: #8ad21e;
-    border-radius: 10px;
-    transition-duration: 300ms;
-    text-decoration: underline;
+  background-color: #8ad21e;
+  border-radius: 10px;
+  transition-duration: 300ms;
+  text-decoration: underline;
 }

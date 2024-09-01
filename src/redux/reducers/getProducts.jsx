@@ -1,12 +1,12 @@
-import { GET_ALL_PODUCTS } from "../types"
+import { GET_ALL_PODUCTS } from "../types";
 
-const initialState = []
+const initialState = [];
 
 export const getProduct = (state = initialState, action) => {
-    switch(action.type){
-        case GET_ALL_PODUCTS:
-            return [...action.payload]
-        default :
-            return state;
-    }
-}
+  switch (action.type) {
+    case GET_ALL_PODUCTS:
+      return [...action.payload];
+    default:
+      return state;
+  }
+};

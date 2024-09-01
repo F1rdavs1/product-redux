@@ -7,17 +7,19 @@ import { Button } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { useDispatch, useSelector } from "react-redux";
-import { LIKE_SAVE, SAVED_PRODUCT } from "../redux/types";
+import { BUY_SAVE, LIKE_SAVE, SAVED_PRODUCT } from "../redux/types";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function ProductCard({ item }) {
   const dispatch = useDispatch();
   const likeList = useSelector((state) => state.likeList);
+  const buyList = useSelector((state) => state.buyList);
   const savedList = useSelector((state) => state.savedProduct);
 
   const handleLike = () => {
     const isLiked = likeList.some((likedItem) => likedItem.id === item.id);
-    
+
     if (isLiked) {
       toast.error("This product is already liked");
     } else {
@@ -26,9 +28,20 @@ export default function ProductCard({ item }) {
     }
   };
 
+  const handleBuy = () => {
+    const isBuy = buyList.some((buyItem) => buyItem.id === item.id);
+
+    if (isBuy) {
+      toast.error("This product is already saved");
+    } else {
+      dispatch({ type: BUY_SAVE, payload: item });
+      toast.success(`${item.title} saved`);
+    }
+  };
+
   const handleSave = () => {
     const isSaved = savedList.some((savedItem) => savedItem.id === item.id);
-    
+
     if (isSaved) {
       toast.error("This product is already saved");
     } else {
@@ -56,6 +69,9 @@ export default function ProductCard({ item }) {
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
           {item.description}
         </Typography>
+        <span className="block mt-[20px] font-medium ">
+          Price <strong>{item.price}$</strong>
+        </span>
       </CardContent>
       <div className="text-center space-x-2">
         <Button
@@ -68,11 +84,19 @@ export default function ProductCard({ item }) {
         </Button>
         <Button
           onClick={handleSave}
-          color="info"
+          color="warning"
           startIcon={<BookmarkIcon />}
           variant="contained"
         >
           Saved
+        </Button>
+        <Button
+          onClick={handleBuy}
+          color="info"
+          startIcon={<ShoppingCartIcon />}
+          variant="contained"
+        >
+          Buy
         </Button>
       </div>
       <Toaster position="top-right" />
